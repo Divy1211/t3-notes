@@ -778,11 +778,11 @@ A random IID sample of $n$ values $X_i$ drawn from a distribution with unknown $
 
 \[ \mathbb{P}(-z_{\alpha/2} \leq \cfrac{\bar{X}_n - \mu_0}{\sigma / \sqrt{n}} \leq z_{\alpha/2}) = 1 - \alpha \]
 
-Hence, we $\color{red}\text{reject $H_0$ in favour of $H_1$}$ iff $\bar{x}$ lies outside the above interval for a given $\alpha$ (probability of type I error, aka significance level, usually small, ~ $0.1$, $0.05$, $0.01$)
+Hence, we $\color{red}\text{reject H0 in favour of H1}$ iff $\bar{x}$ lies outside the above interval for a given $\alpha$ (probability of type I error, aka significance level, usually small, ~ $0.1$, $0.05$, $0.01$)
 
-2. $H_1 : \mu > \mu_0$: we $\color{red}\text{reject $H_0$ in favour of $H_1$}$ iff $\bar{x}$ lies outside the upper bound one sided interval
+2. $H_1 : \mu > \mu_0$: we $\color{red}\text{reject H0 in favour of H1}$ iff $\bar{x}$ lies outside the upper bound one sided interval
 
-3. $H_1 : \mu < \mu_0$: we $\color{red}\text{reject $H_0$ in favour of $H_1$}$ iff $\bar{x}$ lies outside the lower bound one sided interval
+3. $H_1 : \mu < \mu_0$: we $\color{red}\text{reject H0 in favour of H1}$ iff $\bar{x}$ lies outside the lower bound one sided interval
 
 ### p-value
 
@@ -809,3 +809,53 @@ Thus:
 \[ \beta = 1 - \mathbb{P}(Z < \cfrac{\mu_1 - \mu_0}{\cfrac{\sigma}{\sqrt{n}}} - z_{\alpha}) \]
 
 $\beta$ is the probability of committing a type II error. (failing to reject $H_0$ when it is false)
+
+## Residuals
+
+If we have some data $(x_i, y_i)$ and we draw the regression line for it using the equation $\hat{y} = \beta_0+ + \beta_1x$ then for each $y_i$, we have a residual defined as $e_i = y_i - \hat{y}_i$
+
+If the data is actually linear in reality, then the residual values are IID normal random variables (assuming that the errors are measurement errors)
+
+Hence, an $(x_i, e_i)$ plot (known as a **residual plot**) should hold the following properties:
+
+1. It should be randomly distributed
+2. The vertical spread of residuals (standard deviation of the $\epsilon_i$) should remain constant
+3. The Q-Q plot of the residuals can be used to test for normality as well.
+
+If the residual plot is a parabola, the regression may need an $x^2$ term
+
+The variance of the residuals can be estimated by the mean squared error:
+
+$s^2 = \cfrac{1}{n-2} \sum\limits^n_{i=1}e_i^2$
+
+generally, any $e_i > 2s$ implies outlier 
+
+### Distribution of $\beta_1$
+
+$\hat{\beta}_1 \sim \mathcal{N}(\beta_1, \cfrac{\sigma^2}{(n-1) s_x^2})$ (w13c1 for proof)
+
+plug this into the confidence interval formula for an SND $\sim \mathcal{N}(\mu, \sigma^2)$ with $n$ observations
+
+\[ \mathbb{P}(-z_{\alpha/2} \leq \cfrac{\hat{\beta}_1 - \beta_1}{\sigma/(s_x\sqrt{n-1})} \leq z_{\alpha/2}) = 1 - \alpha \]
+
+since $\sigma^2$ is unknown in practise, it is replaced with $s^2$ (MSE) and then the t-distribution is utilised to find the CI.
+
+### Hypothesis Testing
+
+if we have $H_0 : \beta_1 = b_1$ vs $H_1 : \beta_1 \neq b_1$
+
+We can reject $H_0$ in favour of $H_1$ at significance level $\alpha$ if $b_1$ lies outside the CI constructed using the given $\alpha$
+
+## Maximum likelyhood estimation
+
+We can use the sample mean and sample variance to approximate the mean and variance of a dist.
+
+In general, a distribution may contain parameters that are different from its mean and var. To find/estimate such parameters, the goal is to pick such a value for them that maximises the probability of seeing the given data.
+
+For instance, if we know that a biased coin has some probability $p$ to give $T$, and we observe $T T T H T$, then intuitively the value of $p$ that maximises this outcome is $p = 4/5$. This can be shown by maximising $\mathbb{P} = p^4 (1-p)$
+
+In general, if we have a pdf with a parameter: $f(x | t)$ and $n$ IID observations $x_i$, then we can write the probability of obserivng the outcome as:
+
+\[ L(t) = \prod\limits_{i = 1}^{n} f(x | t)\]
+
+This function is known as the likelyhood function (probability) of observing the given outcome. Now we can maximise this to find the parameter $t$.

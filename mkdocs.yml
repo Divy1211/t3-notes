@@ -6,6 +6,7 @@ repo_url:           ""
 use_directory_urls: true
 
 nav:
+  - About:                          "index.md"
   - DDW:
     - Notes: "ddw/notes.md"
     - Deadlines: "ddw/deadlines.md"
