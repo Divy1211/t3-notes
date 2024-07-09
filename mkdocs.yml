@@ -91,7 +91,7 @@ theme:
   icon:
     logo: octicons/file-code-24
     admonition:
-      abstract: octicons/checklist-16`
+      abstract: octicons/checklist-16
       bug:      octicons/bug-16
       danger:   octicons/zap-16
       example:  octicons/beaker-16
